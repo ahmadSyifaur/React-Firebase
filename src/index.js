@@ -1,9 +1,9 @@
 import React,{useState} from 'react';
 import ReactDOM from 'react-dom';
-import {Switch,BrowserRoute as Router , Route} from 'react-router-dom'
-import routes from './routes'
+import {Switch,BrowserRouter as Router , Route} from 'react-router-dom';
+import routes from './routes.js';
 import Header from './Header';
-import "./style.css";
+import './style.css'
 import * as firebase from 'firebase';
 import firebaseConfig from './firebase.config';
 // import * as serviceWorker from './serviceWorker';
@@ -19,7 +19,7 @@ function App (){
       Is logged in? {JSON.stringify(isLoggedIn)}
       <div className="App">
         <Router>
-          <Header>
+          <Header/>
             <Switch>
               {routes.map(route=>(
                 <Route
@@ -30,7 +30,6 @@ function App (){
                 />
               ))}
             </Switch>
-          </Header>
         </Router>
       </div>
     </AuthContext.Provider>

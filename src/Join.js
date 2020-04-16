@@ -1,5 +1,6 @@
 import React, {useState, useContext} from 'react';
 import {AuthContext} from './index';
+import * as firebase from 'firebase';
 
 const Join = () =>{
     const [email,setEmail]= useState("");
@@ -9,8 +10,15 @@ const Join = () =>{
     const Auth =useContext(AuthContext);
     const handleForm=e=>{
         e.preverentDefault();
-        console.log(Auth);
-        Auth.setLogedIn(true);
+        firebase
+            .auth()
+            .createUserWithEmailAndPassword(email,password)
+            .then(res=>{
+                if(res.user) Auth.setLogedIn(true);
+            })
+            .catch(e=>{
+                setErrors(e.message);
+            })
     };
 
     return(
@@ -34,7 +42,7 @@ const Join = () =>{
                 <hr/>
                 <button className="googleBtn" type="button">
                     <img
-                        src="https://upload.wikipedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+                        src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
                         alt="logo"
                     />
                     Login With Google
@@ -43,6 +51,7 @@ const Join = () =>{
                 <span>{error}</span>
             </form>
         </div>
-    )
-}
+    );
+};
+
 export default Join;
